@@ -4,6 +4,7 @@ FROM golang:1.23 AS builder
 WORKDIR /workspace
 COPY go.mod go.mod
 COPY go.sum go.sum
+COPY VERSION VERSION
 COPY Makefile Makefile
 
 #RUN go mod download
