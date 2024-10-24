@@ -1,3 +1,6 @@
+ARG ARCH=amd64
+ARG OS=linux
+ARG CGO_ENABLED=0
 # Build the manager binary
 FROM golang:1.23 AS builder
 
@@ -7,12 +10,20 @@ WORKDIR /workspace
 COPY . .
 
 # Build
-RUN CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} make build-binary
+RUN make build-binary
 
 
-FROM alpine:3.20.3
+FROM alpine:latest
 
 WORKDIR /
-COPY --from=builder /workspace/echo .
+COPY --from=builder /workspace/echo /bin/echo
 
-ENTRYPOINT ["/echo"]
+USER nobody:nobody
+
+LABEL org.opencontainers.image.source="https://github.com/kubeservice-stack/echo" \
+    org.opencontainers.image.url="https://stack.kubeservice.cn/" \
+    org.opencontainers.image.documentation="https://stack.kubeservice.cn/" \
+    org.opencontainers.image.licenses="Apache-2.0"
+    
+
+ENTRYPOINT ["/bin/echo"]
