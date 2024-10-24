@@ -19,6 +19,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"os/signal"
@@ -35,6 +36,7 @@ import (
 	_ "github.com/kubeservice-stack/echo/pkg/health"
 	_ "github.com/kubeservice-stack/echo/pkg/metrics"
 	"github.com/kubeservice-stack/echo/pkg/routers"
+	"github.com/kubeservice-stack/echo/pkg/version"
 
 	logging "github.com/kubeservice-stack/common/pkg/logger"
 	_ "github.com/kubeservice-stack/common/pkg/metrics"
@@ -47,6 +49,8 @@ const (
 
 var (
 	mainLogger = logging.GetLogger("cmd", ServerName)
+	printVer   bool
+	printShort bool
 )
 
 func main() {
@@ -56,10 +60,17 @@ func main() {
 		"address on which to expose metrics (disabled when empty)").
 		String()
 
+	app.Flag("version", "Prints current version.").Default("false").BoolVar(&printVer)
+	app.Flag("short-version", "Print just the version number.").Default("false").BoolVar(&printShort)
+
 	if _, err := app.Parse(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stdout, err)
 		mainLogger.Error(fmt.Sprint("parse args err: ", err))
 		os.Exit(2)
+	}
+	if printShort || printVer {
+		Print(os.Stdout, ServerName)
+		os.Exit(0)
 	}
 
 	if *listenAddress == "" {
@@ -113,5 +124,16 @@ func main() {
 	if err := g.Run(); err != nil {
 		mainLogger.Error("Failed to run", logging.Error(err))
 		os.Exit(1)
+	}
+}
+
+// Print version information to a given out writer.
+func Print(out io.Writer, program string) {
+	if printShort {
+		fmt.Fprint(out, version.BuildContext())
+		return
+	}
+	if printVer {
+		fmt.Fprint(out, version.Print(program))
 	}
 }

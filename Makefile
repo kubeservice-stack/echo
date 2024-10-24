@@ -38,8 +38,9 @@ GOSYCLO_BINARY=$(TOOLS_BIN_DIR)/gocyclo
 SWAGGO_BINARY=$(TOOLS_BIN_DIR)/swag
 TOOLING=$(GOLANGCILINTER_BINARY) $(GOSEC_BINARY) $(GOSYCLO_BINARY) $(SWAGGO_BINARY)
 
-COMMON_PKG ?= ./pkg
-COMMON_CMD ?= ./cmd
+GO_PKG=github.com/kubeservice-stack/$(SERVER_NAME)
+COMMON_PKG ?= $(GO_PKG)/pkg
+COMMON_CMD ?= $(GO_PKG)/cmd
 # The ldflags for the go build process to set the version related data.
 GO_BUILD_LDFLAGS=\
 	-s \

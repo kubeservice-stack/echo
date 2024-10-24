@@ -20,10 +20,12 @@ import (
 	"bytes"
 	"fmt"
 	"runtime"
+	"runtime/debug"
 	"strings"
 	"text/template"
 )
 
+// Build information. Populated at build-time.
 var (
 	Version   string
 	Revision  string
@@ -33,8 +35,12 @@ var (
 	GoVersion = runtime.Version()
 	GoOS      = runtime.GOOS
 	GoArch    = runtime.GOARCH
+
+	computedRevision string
+	computedTags     string
 )
 
+// versionInfoTmpl contains the template used by Info.
 var versionInfoTmpl = `
 {{.program}}, version {{.version}} (branch: {{.branch}}, revision: {{.revision}})
   build user:       {{.buildUser}}
@@ -44,6 +50,7 @@ var versionInfoTmpl = `
   tags:             {{.tags}}
 `
 
+// Print returns version information.
 func Print(program string) string {
 	m := map[string]string{
 		"program":   program,
@@ -65,10 +72,57 @@ func Print(program string) string {
 	return strings.TrimSpace(buf.String())
 }
 
+// Info returns version, branch and revision information.
 func Info() string {
 	return fmt.Sprintf("(version=%s, branch=%s, revision=%s)", Version, Branch, GetRevision())
 }
 
+// BuildContext returns goVersion, platform, buildUser and buildDate information.
 func BuildContext() string {
 	return fmt.Sprintf("(go=%s, platform=%s, user=%s, date=%s, tags=%s)", GoVersion, GoOS+"/"+GoArch, BuildUser, BuildDate, GetTags())
+}
+
+func GetRevision() string {
+	if Revision != "" {
+		return Revision
+	}
+	return computedRevision
+}
+
+func GetTags() string {
+	return computedTags
+}
+
+func init() {
+	computedRevision, computedTags = computeRevision()
+}
+
+func computeRevision() (string, string) {
+	var (
+		rev      = "unknown"
+		tags     = "unknown"
+		modified bool
+	)
+
+	buildInfo, ok := debug.ReadBuildInfo()
+	if !ok {
+		return rev, tags
+	}
+	for _, v := range buildInfo.Settings {
+		if v.Key == "vcs.revision" {
+			rev = v.Value
+		}
+		if v.Key == "vcs.modified" {
+			if v.Value == "true" {
+				modified = true
+			}
+		}
+		if v.Key == "-tags" {
+			tags = v.Value
+		}
+	}
+	if modified {
+		return rev + "-modified", tags
+	}
+	return rev, tags
 }
