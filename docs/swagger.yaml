@@ -1,6 +1,21 @@
 info:
   contact: {}
 paths:
+  /favicon.ico:
+    get:
+      consumes:
+      - application/json
+      description: Favicon
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Favicon
+      tags:
+      - favicon
   /healthz:
     get:
       consumes:

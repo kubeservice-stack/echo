@@ -91,7 +91,7 @@ golangci-lint: $(GOLANGCILINTER_BINARY)  # golangci-lint
 
 .PHONY: swag
 swag: $(SWAGGO_BINARY) # swag
-	$(SWAGGO_BINARY) init -g $(COMMON_CMD)/main.go
+	$(SWAGGO_BINARY) init -g ./cmd/main.go
 
 ###########
 # Testing #
