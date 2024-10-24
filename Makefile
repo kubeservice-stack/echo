@@ -44,6 +44,7 @@ COMMON_CMD ?= $(GO_PKG)/cmd
 # The ldflags for the go build process to set the version related data.
 GO_BUILD_LDFLAGS=\
 	-s \
+	-w \
 	-X $(COMMON_PKG)/version.Revision=$(BUILD_REVISION)  \
 	-X $(COMMON_PKG)/version.BuildUser=$(BUILD_USER) \
 	-X $(COMMON_PKG)/version.BuildDate=$(BUILD_DATE) \
