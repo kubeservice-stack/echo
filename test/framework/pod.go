@@ -121,7 +121,7 @@ func execute(ctx context.Context, method string, url *url.URL, config *rest.Conf
 		return err
 	}
 
-	return exec.Stream(remotecommand.StreamOptions{
+	return exec.StreamWithContext(ctx, remotecommand.StreamOptions{
 		Stdin:  stdin,
 		Stdout: stdout,
 		Stderr: stderr,

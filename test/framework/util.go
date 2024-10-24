@@ -32,9 +32,8 @@ import (
 func SourceToIOReader(source string) (io.Reader, error) {
 	if strings.HasPrefix(source, "http") {
 		return URLToIOReader(source)
-	} else {
-		return PathToOSFile(source)
 	}
+	return PathToOSFile(source)
 }
 
 func PathToOSFile(relativePath string) (*os.File, error) {
@@ -54,7 +53,7 @@ func PathToOSFile(relativePath string) (*os.File, error) {
 func URLToIOReader(url string) (io.Reader, error) {
 	var resp *http.Response
 
-	err := wait.PollUntilWithContext(context.Background(), time.Second, func(ctx context.Context) (bool, error) {
+	err := wait.PollUntilContextTimeout(context.Background(), time.Second, time.Minute*5, false, func(_ context.Context) (bool, error) {
 		var err error
 		resp, err = http.Get(url)
 		if err == nil && resp.StatusCode == 200 {

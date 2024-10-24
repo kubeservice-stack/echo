@@ -34,7 +34,7 @@ func Test_Logging(t *testing.T) {
 		c.String(http.StatusOK, "dongjiang")
 	})
 
-	router.GET("/test2", func(c *gin.Context) {
+	router.GET("/test2", func(_ *gin.Context) {
 		panic("bug")
 	})
 

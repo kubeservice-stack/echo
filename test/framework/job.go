@@ -94,7 +94,7 @@ func (f *Framework) CreateOrUpdateJobAndWaitUntilReady(ctx context.Context, name
 }
 
 func (f *Framework) WaitForJobReady(ctx context.Context, namespace, jobName string, expectedGeneration int32) error {
-	err := wait.PollUntilWithContext(ctx, time.Second, func(ctx context.Context) (bool, error) {
+	err := wait.PollUntilContextTimeout(ctx, time.Second, time.Minute*5, false, func(ctx context.Context) (bool, error) {
 		d, err := f.KubeClient.BatchV1().Jobs(namespace).Get(ctx, jobName, metav1.GetOptions{})
 		if err != nil {
 			return false, err
@@ -121,8 +121,8 @@ func (f *Framework) DeleteJob(ctx context.Context, namespace, name string) error
 	return f.KubeClient.BatchV1().Jobs(namespace).Delete(ctx, job.Name, metav1.DeleteOptions{})
 }
 
-func (f *Framework) WaitUntilJobGone(ctx context.Context, kubeClient kubernetes.Interface, namespace, name string, timeout time.Duration) error {
-	return wait.PollUntilWithContext(ctx, time.Second, func(ctx context.Context) (bool, error) {
+func (f *Framework) WaitUntilJobGone(ctx context.Context, _ kubernetes.Interface, namespace, name string, timeout time.Duration) error {
+	return wait.PollUntilContextTimeout(ctx, time.Second, timeout, false, func(ctx context.Context) (bool, error) {
 		_, err := f.KubeClient.
 			BatchV1().Jobs(namespace).
 			Get(ctx, name, metav1.GetOptions{})

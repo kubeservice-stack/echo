@@ -4,6 +4,7 @@ go 1.22.0
 
 require (
 	github.com/bwplotka/mdox v0.9.0
+	github.com/fzipp/gocyclo v0.6.0
 	github.com/golangci/golangci-lint v1.57.0
 	github.com/securego/gosec/v2 v2.21.4
 	github.com/swaggo/swag v1.16.4
@@ -78,7 +79,6 @@ require (
 	github.com/felixge/httpsnoop v1.0.4 // indirect
 	github.com/firefart/nonamedreturns v1.0.4 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
-	github.com/fzipp/gocyclo v0.6.0 // indirect
 	github.com/ghostiam/protogetter v0.3.5 // indirect
 	github.com/go-critic/go-critic v0.11.2 // indirect
 	github.com/go-kit/kit v0.10.0 // indirect

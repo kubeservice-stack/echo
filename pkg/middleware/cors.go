@@ -27,7 +27,7 @@ const (
 	CORSWEIGHT = 50
 )
 
-// 处理跨域请求,支持options访问
+// 处理跨域请求,支持options访问.
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method
@@ -40,7 +40,7 @@ func Cors() gin.HandlerFunc {
 		}
 		c.Header("Access-Control-Expose-Headers", "Content-Length, Etag")
 
-		//放行所有OPTIONS方法
+		// 放行所有OPTIONS方法
 		if method == http.MethodOptions {
 			c.AbortWithStatus(http.StatusNoContent)
 		}

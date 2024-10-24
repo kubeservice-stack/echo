@@ -33,8 +33,8 @@ func Test_Request(t *testing.T) {
 		c.String(http.StatusOK, "dongjiang")
 	})
 
-	router.GET("/requestId", func(c *gin.Context) {
-		c.String(http.StatusOK, c.Request.Context().Value("requestId").(string))
+	router.GET("/requestID", func(c *gin.Context) {
+		c.String(http.StatusOK, c.Request.Context().Value(String("requestID")).(string))
 	})
 
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
@@ -45,10 +45,10 @@ func Test_Request(t *testing.T) {
 	assert.Equal(
 		http.Header{
 			"Content-Type": []string{"text/plain; charset=utf-8"},
-		}, w.HeaderMap)
+		}, w.Header())
 	assert.Equal("dongjiang", w.Body.String())
 
-	req1 := httptest.NewRequest(http.MethodGet, "/requestId", nil)
+	req1 := httptest.NewRequest(http.MethodGet, "/requestID", nil)
 	w1 := httptest.NewRecorder()
 	router.ServeHTTP(w1, req1)
 	assert.Len(w1.Body.String(), 36)

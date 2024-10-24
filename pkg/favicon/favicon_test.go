@@ -14,34 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package router
+package favicon
 
 import (
 	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/gin-gonic/gin"
+	"github.com/kubeservice-stack/echo/pkg/routers"
+	"github.com/stretchr/testify/assert"
 )
 
-var defaultRouters = map[string]*HandlerService{
-	"metrics": {
-		HandleName: "metrics",
-		Group:      "/",
-		Path:       "/metrics",
-		Method:     http.MethodGet,
-		Host:       []string{"*"},
-	},
+func TestFaviconRoute(t *testing.T) {
+	assert := assert.New(t)
+	r := gin.Default()
+	router.Router(r)
 
-	"healthz": {
-		HandleName: "healthz",
-		Group:      "/",
-		Path:       "/healthz",
-		Method:     http.MethodGet,
-		Host:       []string{"*"},
-	},
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/favicon.ico", nil)
+	req.Host = "127.0.0.1:9445"
+	r.ServeHTTP(w, req)
 
-	"favicon.ico": {
-		HandleName: "favicon.ico",
-		Group:      "/",
-		Path:       "/favicon.ico",
-		Method:     http.MethodGet,
-		Host:       []string{"*"},
-	},
+	assert.Equal(200, w.Code)
+	assert.Len(w.Body.String(), 2)
 }

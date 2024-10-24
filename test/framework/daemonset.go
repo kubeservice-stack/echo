@@ -94,7 +94,7 @@ func (f *Framework) CreateOrUpdateDaemonSetAndWaitUntilReady(ctx context.Context
 }
 
 func (f *Framework) WaitForDaemonSetReady(ctx context.Context, namespace, daemonsetName string, expectedGeneration int64) error {
-	err := wait.PollUntilWithContext(ctx, time.Second, func(ctx context.Context) (bool, error) {
+	err := wait.PollUntilContextTimeout(ctx, time.Second, time.Minute*5, false, func(ctx context.Context) (bool, error) {
 		d, err := f.KubeClient.AppsV1().DaemonSets(namespace).Get(ctx, daemonsetName, metav1.GetOptions{})
 		if err != nil {
 			return false, err
@@ -121,8 +121,8 @@ func (f *Framework) DeleteDaemonSet(ctx context.Context, namespace, name string)
 	return f.KubeClient.AppsV1beta2().DaemonSets(namespace).Delete(ctx, d.Name, metav1.DeleteOptions{})
 }
 
-func (f *Framework) WaitUntilDaemonSetGone(ctx context.Context, kubeClient kubernetes.Interface, namespace, name string, timeout time.Duration) error {
-	return wait.PollUntilWithContext(ctx, time.Second, func(ctx context.Context) (bool, error) {
+func (f *Framework) WaitUntilDaemonSetGone(ctx context.Context, _ kubernetes.Interface, namespace, name string, timeout time.Duration) error {
+	return wait.PollUntilContextTimeout(ctx, time.Second, timeout, false, func(ctx context.Context) (bool, error) {
 		_, err := f.KubeClient.
 			AppsV1beta2().DaemonSets(namespace).
 			Get(ctx, name, metav1.GetOptions{})

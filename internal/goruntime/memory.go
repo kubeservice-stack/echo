@@ -20,10 +20,9 @@ import (
 	"fmt"
 	"runtime/debug"
 
-	"go.uber.org/zap"
-
 	"github.com/KimMachineGun/automemlimit/memlimit"
 	"github.com/kubeservice-stack/common/pkg/logger"
+	"go.uber.org/zap"
 )
 
 func SetMemLimit(logger *logger.Logger, memlimitRatio float64) {

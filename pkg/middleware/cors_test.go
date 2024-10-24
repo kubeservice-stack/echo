@@ -44,6 +44,6 @@ func Test_CORS(t *testing.T) {
 		"Access-Control-Allow-Origin":   []string{"*"},
 		"Access-Control-Expose-Headers": []string{"Content-Length, Etag"},
 		"Content-Type":                  []string{"text/plain; charset=utf-8"},
-	}, w.HeaderMap)
+	}, w.Header())
 	assert.Equal("dongjiang", w.Body.String())
 }

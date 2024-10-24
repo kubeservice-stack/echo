@@ -28,24 +28,24 @@ const (
 	ALLOWWEIGHT = 90
 )
 
-var defaultAllowPath map[string]AllowConfig = map[string]AllowConfig{
+var defaultAllowPath = map[string]AllowConfig{
 	"favicon.ico": {
 		HostAllowDomain: true,
-		HostAllowIp:     true,
+		HostAllowIP:     true,
 	},
 	"metrics": {
 		HostAllowDomain: false,
-		HostAllowIp:     true,
+		HostAllowIP:     true,
 	},
 	"healthz": {
 		HostAllowDomain: false,
-		HostAllowIp:     true,
+		HostAllowIP:     true,
 	},
 }
 
 type AllowConfig struct {
 	HostAllowDomain bool
-	HostAllowIp     bool
+	HostAllowIP     bool
 }
 
 func Allowz() gin.HandlerFunc {
@@ -64,7 +64,7 @@ func Allowz() gin.HandlerFunc {
 		host, _, _ = net.SplitHostPort(c.Request.Host)
 		ip = net.ParseIP(host)
 		if (ocf.HostAllowDomain && ip == nil) ||
-			(ocf.HostAllowIp && ip != nil) {
+			(ocf.HostAllowIP && ip != nil) {
 			c.Set("ALLOW", true)
 		}
 	}

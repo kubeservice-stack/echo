@@ -14,12 +14,12 @@ COPY docs/ docs/
 COPY vendor/ vendor/
 
 # Build
-RUN CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -ldflags "-extldflags -static" -o server ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=${OS} GOARCH=${ARCH} go build -ldflags "-extldflags -static" -o echo ./cmd/main.go
 
 
-FROM docker.io/docker-repo/library/alpine:latest
+FROM alpine:3.20.3
 
 WORKDIR /
-COPY --from=builder /workspace/server .
+COPY --from=builder /workspace/echo .
 
 ENTRYPOINT ["/server"]

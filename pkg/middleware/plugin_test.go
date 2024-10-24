@@ -42,6 +42,4 @@ func Test_Instances(t *testing.T) {
 	assert.False(testss.In(&Instance{}))
 	testss = append(testss, &Instance{})
 	assert.True(testss.In(&Instance{}))
-
-	testss = append(testss, nil)
 }

@@ -61,7 +61,7 @@ func Register(plugin *Instance) {
 	plugins = append(plugins, plugin)
 }
 
-// CLI 调用方法
+// CLI 调用方法.
 func ListPlugins() []string {
 	var keys []string
 	for _, p := range plugins {

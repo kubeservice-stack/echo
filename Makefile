@@ -10,13 +10,12 @@ endif
 
 CONTAINER_CLI ?= docker
 
-# TODO:server name
-SERVER_NAME ?= server
+SERVER_NAME ?= echo
 
-IMAGE ?= artifacts.iflytek.com/local/$(SERVER_NAME)
+IMAGE ?= ghcr.io/kubeservice-stack/$(SERVER_NAME)
 DOCKERFILE ?= ./hack/build/Dockerfile
 TAG?=$(shell git rev-parse --short HEAD)
-VERSION?=$(shell cat VERSION.yml | tr -d " \t\n\r" | grep -Eo "v[0-9]+\.[0-9]+.*")
+VERSION?=$(shell cat VERSION | grep -Eo "v[0-9]+\.[0-9]+.*")
 
 BUILD_DATE=$(shell date +"%Y%m%d-%T")
 ifndef CI

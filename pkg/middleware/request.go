@@ -25,6 +25,8 @@ import (
 	"github.com/satori/go.uuid"
 )
 
+type String string
+
 const (
 	REQUESTINFO       = "REQUESTINFO"
 	REQUESTINFOWEIGHT = 120
@@ -34,19 +36,19 @@ func RequestInfo() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		reqCxt := c.Request.Context()
 		//来源请求ID
-		forwardRequestId := c.Request.Header.Get("uniqid")
-		reqCxt = context.WithValue(reqCxt, "forwardRequestId", forwardRequestId)
+		forwardRequestID := c.Request.Header.Get("uniqID")
+		reqCxt = context.WithValue(reqCxt, String("forwardRequestID"), forwardRequestID)
 		//请求ID
-		requestId := c.Request.Header.Get("requestId")
+		requestID := c.Request.Header.Get("requestID")
 
-		if requestId == "" {
-			requestId = uuid.NewV4().String()
+		if requestID == "" {
+			requestID = uuid.NewV4().String()
 		}
 
-		reqCxt = context.WithValue(reqCxt, "requestId", requestId)
-		reqCxt = context.WithValue(reqCxt, "clientAddress", c.Request.RemoteAddr)
+		reqCxt = context.WithValue(reqCxt, String("requestID"), requestID)
+		reqCxt = context.WithValue(reqCxt, String("clientAddress"), c.Request.RemoteAddr)
 		if http.LocalAddrContextKey != nil && reqCxt.Value(http.LocalAddrContextKey) != nil {
-			reqCxt = context.WithValue(reqCxt, "serverAddress", reqCxt.Value(http.LocalAddrContextKey).(*net.TCPAddr).String())
+			reqCxt = context.WithValue(reqCxt, String("serverAddress"), reqCxt.Value(http.LocalAddrContextKey).(*net.TCPAddr).String())
 		}
 		c.Request = c.Request.WithContext(reqCxt)
 

@@ -25,7 +25,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-func testDeplayment(ctx context.Context) func(t *testing.T) {
+func testDeplayment(_ context.Context) func(t *testing.T) {
 	return func(t *testing.T) {
 		testCtx := testframework.NewTestCtx(t)
 		defer testCtx.Cleanup(t)

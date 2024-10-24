@@ -29,7 +29,7 @@ import (
 
 var log = logger.GetLogger("pkg/router", "router")
 
-// handername - hander func
+// handername - hander func.
 var handlerAdapter = make(map[string]gin.HandlerFunc)
 
 func Register(name string, h gin.HandlerFunc) {
@@ -50,7 +50,7 @@ func FullRegisters() map[string]gin.HandlerFunc {
 	return handlerAdapter
 }
 
-// 配置信息
+// 配置信息.
 type HandlerService struct {
 	HandleName string   // handle name
 	Group      string   // default group "/"
@@ -59,7 +59,7 @@ type HandlerService struct {
 	Host       []string // Host
 }
 
-// Router 路由规则
+// Router 路由规则.
 func Router(r *gin.Engine) {
 	for _, mid := range middleware.AllMiddlewarePlugins() {
 		log.Info("use gin middleware", logger.String("name", mid.Name))

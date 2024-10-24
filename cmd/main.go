@@ -58,7 +58,7 @@ func main() {
 
 	if _, err := app.Parse(os.Args[1:]); err != nil {
 		fmt.Fprintln(os.Stdout, err)
-		mainLogger.Error(fmt.Sprintf("parse args err: %w", err))
+		mainLogger.Error(fmt.Sprint("parse args err: ", err))
 		os.Exit(2)
 	}
 

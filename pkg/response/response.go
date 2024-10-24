@@ -24,24 +24,24 @@ import (
 	"github.com/kubeservice-stack/common/pkg/errno"
 )
 
-// ResponseData is commonly used to return JSON format response.
-type ResponseData struct {
+// Response is commonly used to return JSON format response.
+type Response struct {
 	Status  int         `json:"status,omitempty" xml:"status,omitempty"`
 	Message string      `json:"message,omitempty" xml:"message,omitempty"`
 	Data    interface{} `json:"data,omitempty" xml:"data,omitempty"`
 }
 
-// JSON response Json format for media-server
+// JSON response Json format for media-server.
 func JSON(c *gin.Context, err error, data interface{}) {
 	c.Header("X-Request-Id", c.GetString("requestId"))
 	if err == nil {
-		c.JSON(http.StatusOK, &ResponseData{http.StatusOK, "Success", data})
+		c.JSON(http.StatusOK, &Response{http.StatusOK, "Success", data})
 	} else {
 		var nerr *errno.Errno
 		if errors.As(err, &nerr) {
-			c.JSON(nerr.Status(), &ResponseData{nerr.Status(), nerr.Message(), data})
+			c.JSON(nerr.Status(), &Response{nerr.Status(), nerr.Message(), data})
 		} else {
-			c.JSON(http.StatusInternalServerError, &ResponseData{
+			c.JSON(http.StatusInternalServerError, &Response{
 				errno.InternalServerError.Status(),
 				errno.InternalServerError.Message(),
 				data},

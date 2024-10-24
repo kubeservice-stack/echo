@@ -40,7 +40,7 @@ const (
 	STACKLOGWEIGHT  = 102
 )
 
-// access logging
+// access logging.
 func Logging() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
