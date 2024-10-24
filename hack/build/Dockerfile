@@ -23,4 +23,4 @@ FROM alpine:3.20.3
 WORKDIR /
 COPY --from=builder /workspace/echo .
 
-ENTRYPOINT ["/server"]
+ENTRYPOINT ["/echo"]
