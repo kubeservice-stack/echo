@@ -75,7 +75,7 @@ format: go-fmt go-vet gocyclo golangci-lint # make all go-fmt go-vet gocyclo gol
 
 .PHONY: go-fmt # gofmt rewrite to go file
 go-fmt:
-	gofmt -s -w $(COMMON_PKG) $(COMMON_CMD) 
+	gofmt -s -w ./pkg ./cmd ./internal
 
 .PHONY: go-vet 
 go-vet: # go vet
