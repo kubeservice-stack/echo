@@ -4,7 +4,6 @@ FROM golang:1.23 AS builder
 WORKDIR /workspace
 COPY go.mod go.mod
 COPY go.sum go.sum
-COPY .git .git
 COPY VERSION VERSION
 COPY Makefile Makefile
 
@@ -13,6 +12,7 @@ COPY Makefile Makefile
 # Copy the go source
 COPY cmd/ cmd/
 COPY pkg/ pkg/
+COPY .git/ .git/
 COPY internal/ internal/
 COPY docs/ docs/
 COPY vendor/ vendor/
