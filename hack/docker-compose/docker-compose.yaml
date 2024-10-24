@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=sae
+      - MYSQL_USER=sae
+      - MYSQL_PASSWORD=sae
+    expose:
+      - '3306'
+    ports:
+      - '3306:3306'
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
+
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+    command: >
+      --requirepass root
+    expose:
+      - '6379'
+    ports:
+      - '6379:6379'
+    volumes:
+      - ./data/redis:/data
+    privileged: true
+
+  backend:
+    image: backend:latest
+    command: /opt/sae/server
+    environment:
+      GOPATH: "/go"
+    volumes:
+    - ./conf/application.ini:/opt/sae/conf/application.ini
+    depends_on:
+    - mysql
+    - redis
+    restart: always
+    networks:
+    - default
+    ports:
+    - "8080:8080"
+
+  frontend:
+    image: frontend:latest
+    volumes:
+    - ./conf/config.js:/usr/local/openresty/nginx/html/config.js
+    depends_on:
+    -backend
+    restart: always
+    networks:
+    - default
+    ports:
+    - "4200:80"
