@@ -1,5 +1,5 @@
 # Build the manager binary
-FROM docker.io/dongjiang1989/golang:1.22.1-alpine as builder
+FROM golang:1.23 AS builder
 
 WORKDIR /workspace
 COPY go.mod go.mod
