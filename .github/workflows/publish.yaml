@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
       - id: git-x
         run: |
-          echo "git-version=$(git describe --tags --always)" >> "$GITHUB_OUTPUT"
+          echo "git-version=$(echo \"${GITHUB_SHA:-$(git rev-parse HEAD)}\" | cut -c1-8)" >> "$GITHUB_OUTPUT"
       - id: git-branch
         run: |
           echo "git-branch=$(echo ${GITHUB_REF##*/} | tr '[A-Z]' '[a-z]')" >> "$GITHUB_OUTPUT"

@@ -41,6 +41,7 @@ TOOLING=$(GOLANGCILINTER_BINARY) $(GOSEC_BINARY) $(GOSYCLO_BINARY) $(SWAGGO_BINA
 GO_PKG=github.com/kubeservice-stack/$(SERVER_NAME)
 COMMON_PKG ?= $(GO_PKG)/pkg
 COMMON_CMD ?= $(GO_PKG)/cmd
+COMMON_INTERNAL ?= $(GO_PKG)/internal
 # The ldflags for the go build process to set the version related data.
 GO_BUILD_LDFLAGS=\
 	-s \
