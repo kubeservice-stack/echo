@@ -31,7 +31,7 @@ func TestVersionInfo(t *testing.T) {
 func TestVersionBuildContext(t *testing.T) {
 	assert := assert.New(t)
 	info := BuildContext()
-	assert.Equal("(go=go1.22.0, platform=darwin/amd64, user=, date=, tags=unknown)", info)
+	assert.Equal("(go=go1.22.9, platform=darwin/amd64, user=, date=, tags=unknown)", info)
 }
 
 func TestVersionPrint(t *testing.T) {
