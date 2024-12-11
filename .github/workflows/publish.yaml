@@ -27,7 +27,7 @@ jobs:
             name: echo
             image: kubeservice-stack/echo
             file: ./hack/build/Dockerfile
-            platforms: linux/amd64,linux/arm64
+            platforms: linux/amd64,linux/arm64,linux/386,linux/ppc64le,linux/s390x
 
     steps:
       - name: Checkout
