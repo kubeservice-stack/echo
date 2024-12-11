@@ -16,7 +16,7 @@ RUN make build-binary
 FROM alpine:latest
 
 WORKDIR /
-COPY --from=builder /workspace/echo /bin/echo
+COPY --from=builder /workspace/bin/echo /bin/echo
 
 USER nobody:nobody
 
