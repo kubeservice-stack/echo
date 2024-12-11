@@ -151,8 +151,8 @@ define asserts
 	@GOOS=${1} GOARCH=${2} CGO_ENABLED=0 go build -ldflags="$(GO_BUILD_LDFLAGS)" -o ${BIN_DIR}/$(SERVER_NAME)-$(1)-$(2) cmd/main.go
 endef
 
-.PHONY: build-asserts
-build-asserts: # go build muti arch for github asserts
+.PHONY: build-assets
+build-assets: # go build muti arch for github assets
 	mkdir -p $(BIN_DIR)
 	$(call asserts,linux,amd64)
 	$(call asserts,linux,arm64)
