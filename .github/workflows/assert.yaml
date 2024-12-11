@@ -1,4 +1,4 @@
-name: Build
+name: Assets
 on:
   push:
   workflow_dispatch:
