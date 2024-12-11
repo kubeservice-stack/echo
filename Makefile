@@ -10,6 +10,7 @@ endif
 
 CONTAINER_CLI ?= docker
 
+BIN_DIR ?= $(shell pwd)/bin
 SERVER_NAME ?= echo
 
 IMAGE ?= ghcr.io/kubeservice-stack/$(SERVER_NAME)
@@ -66,6 +67,8 @@ all: format test build e2e # format test build e2e type.
 .PHONY: clean
 clean: # Remove all files and directories ignored by git.
 	git clean -Xfd .
+	rm -rf ${TOOLS_BIN_DIR}
+	rm -rf ${BIN_DIR}
 
 ##############
 # Formatting #
@@ -141,7 +144,21 @@ build-image:
 
 .PHONY: build-binary
 build-binary: # go build output binary
-	$(GO_BUILD_RECIPE) -o $(SERVER_NAME) cmd/main.go
+	$(GO_BUILD_RECIPE) -o ${BIN_DIR}/$(SERVER_NAME) cmd/main.go
+
+define asserts
+	@echo "Building ${SERVER_NAME}-${1}-${2}"
+	@GOOS=${1} GOARCH=${2} CGO_ENABLED=0 go build -ldflags="$(GO_BUILD_LDFLAGS)" -o ${BIN_DIR}/$(SERVER_NAME)-$(1)-$(2) cmd/main.go
+endef
+
+.PHONY: build-asserts
+build-asserts: # go build muti arch for github asserts
+	mkdir -p $(BIN_DIR)
+	$(call asserts,linux,amd64)
+	$(call asserts,linux,arm64)
+	$(call asserts,darwin,amd64)
+	$(call asserts,darwin,arm64)
+	$(call asserts,windows,amd64)
 
 $(TOOLS_BIN_DIR): 
 	mkdir -p $(TOOLS_BIN_DIR)
