@@ -39,5 +39,5 @@ func Favicon(c *gin.Context) {
 }
 
 func init() {
-	router.Register("favicon.ico", Favicon)
+	router.Register("favicon.ico", "/", "favicon.ico", http.MethodGet, Favicon)
 }

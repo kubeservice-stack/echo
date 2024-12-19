@@ -17,46 +17,51 @@ limitations under the License.
 package router
 
 import (
+	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kubeservice-stack/common/pkg/errno"
 	"github.com/kubeservice-stack/common/pkg/logger"
 	"github.com/kubeservice-stack/echo/pkg/middleware"
-	"github.com/kubeservice-stack/echo/pkg/response"
 )
 
 var log = logger.GetLogger("pkg/router", "router")
 
 // handername - hander func.
-var handlerAdapter = make(map[string]gin.HandlerFunc)
+var handlerAdapter = make(map[string]HandlerInfo)
 
-func Register(name string, h gin.HandlerFunc) {
+func Register(name, group, path, method string, h gin.HandlerFunc) {
 	if handlerAdapter == nil {
 		panic("gin.Handler: Register adapter is nil")
 	}
-	if _, ok := handlerAdapter[name]; ok {
+	info := HandlerInfo{
+		Name:   name,
+		Group:  group,
+		Path:   path,
+		Method: method,
+	}
+	if _, ok := handlerAdapter[info.String()]; ok {
 		panic("gin.Handler: Register called twice for adapter :" + name)
 	}
-	handlerAdapter[name] = h
+	info.H = h
+	handlerAdapter[info.String()] = info
 }
 
-func UnRegister(name string) {
-	delete(handlerAdapter, name)
-}
-
-func FullRegisters() map[string]gin.HandlerFunc {
+func FullRegisters() map[string]HandlerInfo {
 	return handlerAdapter
 }
 
 // 配置信息.
-type HandlerService struct {
-	HandleName string   // handle name
-	Group      string   // default group "/"
-	Path       string   // domain path
-	Method     string   // http.Method
-	Host       []string // Host
+type HandlerInfo struct {
+	Name   string // handle name
+	Group  string // default group "/"
+	Path   string // domain path
+	Method string // http.Method
+	H      gin.HandlerFunc
+}
+
+func (info HandlerInfo) String() string {
+	return fmt.Sprintf("%s:%s:%s:%s", info.Name, info.Group, info.Path, info.Method)
 }
 
 // Router 路由规则.
@@ -66,25 +71,12 @@ func Router(r *gin.Engine) {
 		r.Use(mid.F())
 	}
 
-	v := r.Group("/")
-	{
-		v.Handle(http.MethodGet, "/*anypath", RootHander)
-		v.Handle(http.MethodHead, "/*anypath", RootHander)
-		v.Handle(http.MethodPut, "/*anypath", RootHander)
-		v.Handle(http.MethodOptions, "/*anypath", RootHander)
-	}
-}
-
-func RootHander(ctx *gin.Context) {
-	path := ctx.Request.URL.Path
-	if len(ctx.Request.URL.RawPath) > 0 {
-		path = ctx.Request.URL.RawPath
+	for _, info := range handlerAdapter {
+		v := r.Group(info.Group)
+		v.Handle(info.Method, info.Path, info.H)
 	}
 
-	if _, ok := handlerAdapter[strings.Trim(path, "/")]; ok {
-		handlerAdapter[strings.Trim(path, "/")](ctx)
-		return
-	}
-
-	response.JSON(ctx, errno.NotFound, nil)
+	r.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{"message": "404 Not Found"})
+	})
 }
