@@ -39,5 +39,5 @@ func Healthz(c *gin.Context) {
 }
 
 func init() {
-	router.Register("healthz", Healthz)
+	router.Register("healthz", "/", "healthz", http.MethodGet, Healthz)
 }

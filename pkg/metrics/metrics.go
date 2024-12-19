@@ -17,6 +17,8 @@ limitations under the License.
 package metrics
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	mts "github.com/kubeservice-stack/common/pkg/metrics"
 	"github.com/kubeservice-stack/echo/pkg/routers"
@@ -34,5 +36,5 @@ import (
 // @Success 200 {string} Metrics
 // @Router /metrics [get]
 func init() {
-	router.Register("metrics", gin.WrapH(mts.DefaultTallyScope.Reporter.HTTPHandler()))
+	router.Register("metrics", "/", "metrics", http.MethodGet, gin.WrapH(mts.DefaultTallyScope.Reporter.HTTPHandler()))
 }
