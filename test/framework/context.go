@@ -35,11 +35,10 @@ type FinalizerFn func() error
 func (f *Framework) NewTestCtx(t *testing.T) *TestCtx {
 	// TestCtx is used among others for namespace names where '/' is forbidden
 	prefix := strings.TrimPrefix(
-		strings.Replace(
+		strings.ReplaceAll(
 			strings.ToLower(t.Name()),
 			"/",
 			"-",
-			-1,
 		),
 		"test",
 	)
