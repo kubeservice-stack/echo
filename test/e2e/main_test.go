@@ -26,17 +26,12 @@ import (
 
 	"github.com/blang/semver/v4"
 	"github.com/kubeservice-stack/echo/test/framework"
-	"gopkg.in/yaml.v3"
 )
 
 var (
 	testframework *framework.Framework
 	testImage     *string
 )
-
-type Version struct {
-	Variables map[string]string `yaml:"variables"`
-}
 
 func TestMain(m *testing.M) {
 	kubeconfig := flag.String(
@@ -58,23 +53,13 @@ func TestMain(m *testing.M) {
 
 	logger := log.New(os.Stdout, "", log.Lshortfile)
 
-	fp, err := os.Open("../../VERSION.yml")
+	currentVersion, err := os.ReadFile("../../VERSION")
 	if err != nil {
-		logger.Printf("failed to open version file: %v\n", err)
-		os.Exit(1)
-	}
-	defer fp.Close()
-
-	dec := yaml.NewDecoder(fp)
-	// 配置对象
-	var verison Version
-	err = dec.Decode(&verison)
-	if err != nil {
-		logger.Printf("failed to read version fp: %v\n", err)
+		logger.Printf("failed to read version file: %v\n", err)
 		os.Exit(1)
 	}
 
-	currentSemVer, err := semver.ParseTolerant(verison.Variables["TAG_REALSE_VERSION"])
+	currentSemVer, err := semver.ParseTolerant(string(currentVersion))
 	if err != nil {
 		logger.Printf("failed to parse current version: %v\n", err)
 		os.Exit(1)
