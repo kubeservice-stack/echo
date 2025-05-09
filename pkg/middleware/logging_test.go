@@ -28,8 +28,8 @@ import (
 func Test_Logging(t *testing.T) {
 	assert := assert.New(t)
 	router := gin.New()
-	router.Use(Logging())  //logging
-	router.Use(Recovery()) //logging
+	router.Use(Logging("echo"))  //logging
+	router.Use(Recovery("echo")) //logging
 	router.GET("/test1", func(c *gin.Context) {
 		c.String(http.StatusOK, "dongjiang")
 	})

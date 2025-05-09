@@ -29,7 +29,7 @@ import (
 func TestAllow(t *testing.T) {
 	assert := assert.New(t)
 	router := gin.New()
-	router.Use(Allowz())
+	router.Use(Allowz("echo"))
 	router.GET("/", func(c *gin.Context) {
 		allow := IsAllow(c)
 		c.String(http.StatusOK, strconv.FormatBool(allow))
@@ -46,7 +46,7 @@ func TestAllow(t *testing.T) {
 func TestAllowWithHost(t *testing.T) {
 	assert := assert.New(t)
 	router := gin.New()
-	router.Use(Allowz())
+	router.Use(Allowz("echo"))
 	router.GET("/metrics", func(c *gin.Context) {
 		allow := IsAllow(c)
 		c.String(http.StatusOK, strconv.FormatBool(allow))

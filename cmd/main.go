@@ -43,18 +43,17 @@ import (
 )
 
 const (
-	ServerName           = "echo"
 	DefaultMemlimitRatio = 0.85
 )
 
 var (
-	mainLogger = logging.GetLogger("cmd", ServerName)
+	mainLogger = logging.GetLogger("cmd", version.ServerName)
 	printVer   bool
 	printShort bool
 )
 
 func main() {
-	app := kingpin.New(ServerName, "http server name")
+	app := kingpin.New(version.ServerName, "http server name")
 	listenAddress := app.Flag(
 		"listen-address",
 		"address on which to expose metrics (disabled when empty)").
@@ -69,7 +68,7 @@ func main() {
 		os.Exit(2)
 	}
 	if printShort || printVer {
-		Print(os.Stdout, ServerName)
+		Print(os.Stdout, version.ServerName)
 		os.Exit(0)
 	}
 

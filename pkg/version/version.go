@@ -25,6 +25,8 @@ import (
 	"text/template"
 )
 
+const ServerName = "echo"
+
 // Build information. Populated at build-time.
 var (
 	Version   string

@@ -23,6 +23,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kubeservice-stack/common/pkg/logger"
 	"github.com/kubeservice-stack/echo/pkg/middleware"
+	"github.com/kubeservice-stack/echo/pkg/version"
 )
 
 var log = logger.GetLogger("pkg/router", "router")
@@ -68,7 +69,7 @@ func (info HandlerInfo) String() string {
 func Router(r *gin.Engine) {
 	for _, mid := range middleware.AllMiddlewarePlugins() {
 		log.Info("use gin middleware", logger.String("name", mid.Name))
-		r.Use(mid.F())
+		r.Use(mid.F(version.ServerName))
 	}
 
 	for _, info := range handlerAdapter {

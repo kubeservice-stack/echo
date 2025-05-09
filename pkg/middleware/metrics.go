@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/kubeservice-stack/common/pkg/config"
 	"github.com/kubeservice-stack/common/pkg/metrics"
 )
 
@@ -55,7 +56,7 @@ func computeApproximateRequestSize(r *http.Request) int {
 	return s
 }
 
-func MetricsFunc() gin.HandlerFunc {
+func MetricsFunc(_ string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		start := time.Now()
@@ -86,5 +87,12 @@ func MetricsFunc() gin.HandlerFunc {
 }
 
 func init() {
+	customConfig := &config.Metrics{
+		FlushInterval:          5,
+		EnableGoRuntimeMetrics: true,
+		MetricsPrefix:          "echo",
+		MetricsTags:            map[string]string{"service": "backend"},
+	}
+	metrics.DefaultTallyScope = metrics.NewTallyScope(customConfig)
 	Register(&Instance{Name: METRICS, F: MetricsFunc, Weight: METRICSWEIGHT})
 }

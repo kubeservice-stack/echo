@@ -41,7 +41,7 @@ const (
 )
 
 // access logging.
-func Logging() gin.HandlerFunc {
+func Logging(_ string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		reqSz := computeApproximateRequestSize(c.Request)
@@ -90,7 +90,7 @@ func Logging() gin.HandlerFunc {
 	}
 }
 
-func Recovery() gin.HandlerFunc {
+func Recovery(_ string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {

@@ -15,7 +15,7 @@ import (
 func Test_Metrics(t *testing.T) {
 	assert := assert.New(t)
 	router := gin.New()
-	router.Use(MetricsFunc()) //Metricd
+	router.Use(MetricsFunc("echo")) //Metrics
 	router.GET("/metrics", gin.WrapH(metrics.DefaultTallyScope.Reporter.HTTPHandler()))
 	router.GET("/test1", func(c *gin.Context) {
 		c.String(http.StatusOK, "dongjiang")
@@ -41,7 +41,7 @@ func Test_Metrics(t *testing.T) {
 func Test_Metrics_CallMuti(t *testing.T) {
 	assert := assert.New(t)
 	router := gin.New()
-	router.Use(MetricsFunc()) //Metricd
+	router.Use(MetricsFunc("echo")) //Metrics
 	router.GET("/metrics", gin.WrapH(metrics.DefaultTallyScope.Reporter.HTTPHandler()))
 	router.GET("/test1", func(c *gin.Context) {
 		c.String(http.StatusOK, "dongjiang")

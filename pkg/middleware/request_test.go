@@ -28,7 +28,7 @@ import (
 func Test_Request(t *testing.T) {
 	assert := assert.New(t)
 	router := gin.New()
-	router.Use(RequestInfo())
+	router.Use(RequestInfo("echo"))
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "dongjiang")
 	})

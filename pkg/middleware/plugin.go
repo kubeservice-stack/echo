@@ -29,9 +29,9 @@ var (
 )
 
 type Instance struct {
-	F      func() gin.HandlerFunc // middle instance
-	Weight uint                   // plugin load weight 越大到越靠前load
-	Name   string                 // plugin name
+	F      func(servicename string) gin.HandlerFunc // middle instance
+	Weight uint                                     // plugin load weight 越大到越靠前load
+	Name   string                                   // plugin name
 }
 
 type Instances []*Instance

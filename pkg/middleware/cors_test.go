@@ -28,7 +28,7 @@ import (
 func Test_CORS(t *testing.T) {
 	assert := assert.New(t)
 	router := gin.New()
-	router.Use(Cors())
+	router.Use(Cors("echo"))
 	router.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "dongjiang")
 	})

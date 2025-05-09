@@ -32,7 +32,7 @@ const (
 	REQUESTINFOWEIGHT = 120
 )
 
-func RequestInfo() gin.HandlerFunc {
+func RequestInfo(_ string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		reqCxt := c.Request.Context()
 		//来源请求ID

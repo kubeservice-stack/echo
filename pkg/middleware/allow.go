@@ -48,7 +48,7 @@ type AllowConfig struct {
 	HostAllowIP     bool
 }
 
-func Allowz() gin.HandlerFunc {
+func Allowz(_ string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			ocf AllowConfig
