@@ -65,7 +65,7 @@ type propagators struct {
 	embedded.TracerProvider
 }
 
-func (p *propagators) Tracer(instrumentationName string, opts ...oteltrace.TracerOption) oteltrace.Tracer {
+func (p *propagators) Tracer(_ string, _ ...oteltrace.TracerOption) oteltrace.Tracer {
 	return &tracer{}
 }
 
@@ -73,18 +73,18 @@ type tracer struct {
 	embedded.Tracer
 }
 
-func (t *tracer) Start(ctx context.Context, spanName string, opts ...oteltrace.SpanStartOption) (context.Context, oteltrace.Span) {
+func (t *tracer) Start(ctx context.Context, _ string, _ ...oteltrace.SpanStartOption) (context.Context, oteltrace.Span) {
 	return ctx, nil
 }
 
 type tracerProvider struct {
 }
 
-func (t *tracerProvider) Inject(ctx context.Context, carrier propagation.TextMapCarrier) {
+func (t *tracerProvider) Inject(_ context.Context, _ propagation.TextMapCarrier) {
 
 }
 
-func (t *tracerProvider) Extract(ctx context.Context, carrier propagation.TextMapCarrier) context.Context {
+func (t *tracerProvider) Extract(ctx context.Context, _ propagation.TextMapCarrier) context.Context {
 	return ctx
 }
 
@@ -92,13 +92,13 @@ func (t *tracerProvider) Fields() []string {
 	return []string{}
 }
 
-func TestWithPropagators(t *testing.T) {
+func TestWithPropagators(_ *testing.T) {
 	cfg := &traceConfig{}
 	opt := WithPropagators(&tracerProvider{})
 	opt(cfg)
 }
 
-func TestWithTracerProvider(t *testing.T) {
+func TestWithTracerProvider(_ *testing.T) {
 	cfg := &traceConfig{}
 	opt := WithTracerProvider(&propagators{})
 	opt(cfg)

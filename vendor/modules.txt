@@ -164,7 +164,7 @@ github.com/json-iterator/go
 # github.com/klauspost/cpuid/v2 v2.2.8
 ## explicit; go 1.15
 github.com/klauspost/cpuid/v2
-# github.com/kubeservice-stack/common v1.9.0
+# github.com/kubeservice-stack/common v1.9.1
 ## explicit; go 1.24.0
 github.com/kubeservice-stack/common/pkg/config
 github.com/kubeservice-stack/common/pkg/config/ltoml

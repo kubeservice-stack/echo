@@ -7,7 +7,7 @@ require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/blang/semver/v4 v4.0.0
 	github.com/gin-gonic/gin v1.10.0
-	github.com/kubeservice-stack/common v1.9.0
+	github.com/kubeservice-stack/common v1.9.1
 	github.com/oklog/run v1.1.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/stretchr/testify v1.10.0
