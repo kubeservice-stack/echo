@@ -220,8 +220,8 @@ github.com/munnerz/goautoneg
 # github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f
 ## explicit
 github.com/mxk/go-flowrate/flowrate
-# github.com/oklog/run v1.1.0
-## explicit; go 1.13
+# github.com/oklog/run v1.2.0
+## explicit; go 1.20
 github.com/oklog/run
 # github.com/pbnjay/memory v0.0.0-20210728143218-7b4eea64cf58
 ## explicit; go 1.16
