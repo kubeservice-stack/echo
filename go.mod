@@ -10,7 +10,7 @@ require (
 	github.com/kubeservice-stack/common v1.9.1
 	github.com/oklog/run v1.2.0
 	github.com/satori/go.uuid v1.2.0
-	github.com/stretchr/testify v1.11.0
+	github.com/stretchr/testify v1.11.1
 	github.com/swaggo/swag v1.16.6
 	go.opentelemetry.io/contrib v1.37.0
 	go.opentelemetry.io/otel v1.37.0
