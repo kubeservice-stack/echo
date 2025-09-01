@@ -309,7 +309,7 @@ github.com/xhit/go-str2duration/v2
 ## explicit; go 1.22.0
 go.opentelemetry.io/auto/sdk
 go.opentelemetry.io/auto/sdk/internal/telemetry
-# go.opentelemetry.io/contrib v1.37.0
+# go.opentelemetry.io/contrib v1.38.0
 ## explicit; go 1.23.0
 go.opentelemetry.io/contrib
 # go.opentelemetry.io/otel v1.38.0
