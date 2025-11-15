@@ -47,7 +47,7 @@ func Test_Metrics_CallMuti(t *testing.T) {
 		c.String(http.StatusOK, "dongjiang")
 	})
 
-	for index := 0; index < 10; index++ {
+	for range 10 {
 		req := httptest.NewRequest(http.MethodGet, "/test1", nil)
 		w := httptest.NewRecorder()
 		router.ServeHTTP(w, req)

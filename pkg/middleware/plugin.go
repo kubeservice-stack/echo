@@ -18,7 +18,7 @@ package middleware
 
 import (
 	"fmt"
-	"sort"
+	"slices"
 
 	"github.com/gin-gonic/gin"
 )
@@ -35,10 +35,6 @@ type Instance struct {
 }
 
 type Instances []*Instance
-
-func (s Instances) Len() int           { return len(s) }
-func (s Instances) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-func (s Instances) Less(i, j int) bool { return s[i].Weight > s[j].Weight }
 
 func (s Instances) In(n *Instance) bool {
 	for _, i := range s {
@@ -71,6 +67,8 @@ func ListPlugins() []string {
 }
 
 func AllMiddlewarePlugins() []*Instance {
-	sort.Sort(plugins)
+	slices.SortFunc(plugins, func(a *Instance, b *Instance) int {
+		return int(a.Weight - b.Weight)
+	})
 	return plugins
 }
