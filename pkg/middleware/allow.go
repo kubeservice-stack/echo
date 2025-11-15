@@ -72,7 +72,7 @@ func Allowz(_ string) gin.HandlerFunc {
 
 func IsAllow(c *gin.Context) bool {
 	var (
-		opsInterface interface{}
+		opsInterface any
 		ops          bool
 		ok           bool
 	)

@@ -26,13 +26,13 @@ import (
 
 // Response is commonly used to return JSON format response.
 type Response struct {
-	Status  int         `json:"status,omitempty" xml:"status,omitempty"`
-	Message string      `json:"message,omitempty" xml:"message,omitempty"`
-	Data    interface{} `json:"data,omitempty" xml:"data,omitempty"`
+	Status  int    `json:"status,omitempty" xml:"status,omitempty"`
+	Message string `json:"message,omitempty" xml:"message,omitempty"`
+	Data    any    `json:"data,omitempty" xml:"data,omitempty"`
 }
 
 // JSON response Json format for media-server.
-func JSON(c *gin.Context, err error, data interface{}) {
+func JSON(c *gin.Context, err error, data any) {
 	c.Header("X-Request-Id", c.GetString("requestId"))
 	if err == nil {
 		c.JSON(http.StatusOK, &Response{http.StatusOK, "Success", data})
