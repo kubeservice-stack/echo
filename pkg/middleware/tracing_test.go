@@ -58,7 +58,6 @@ func TestTracing(t *testing.T) {
 	router.ServeHTTP(w1, req1)
 	t.Log(w1)
 	fmt.Println(w1.Header())
-
 }
 
 type propagators struct {

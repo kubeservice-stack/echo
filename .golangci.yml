@@ -4,10 +4,18 @@ run:
 linters:
   enable:
     - depguard
+    - asciicheck
+    - bodyclose
+    - goconst
+    - gocyclo
+    - misspell
     - modernize
+    - nilerr
     - revive
     - testifylint
     - unconvert
+    - unused
+    - whitespace
   disable:
     - unused
   settings:
