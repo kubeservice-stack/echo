@@ -62,7 +62,7 @@ GO_BUILD_RECIPE=\
 pkgs = $(shell go list ./... | grep -v /test/ | grep -v /vendor/)
 
 .PHONY: all
-all: format test build e2e # format test build e2e type.
+all: swag format test build e2e # format test build e2e type.
 
 .PHONY: clean
 clean: # Remove all files and directories ignored by git.

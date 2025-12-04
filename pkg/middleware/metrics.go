@@ -58,7 +58,6 @@ func computeApproximateRequestSize(r *http.Request) int {
 
 func MetricsFunc(_ string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		start := time.Now()
 		reqSz := computeApproximateRequestSize(c.Request)
 

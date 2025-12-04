@@ -86,7 +86,6 @@ func Logging(_ string) gin.HandlerFunc {
 				logger.Any("response-content-size", respSz),
 			)
 		}
-
 	}
 }
 

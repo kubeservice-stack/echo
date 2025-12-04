@@ -54,7 +54,6 @@ func Test_Metrics_CallMuti(t *testing.T) {
 
 		assert.Equal(http.StatusOK, w.Code)
 		assert.Equal("dongjiang", w.Body.String())
-
 	}
 	time.Sleep(6 * time.Second)
 

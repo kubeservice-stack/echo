@@ -52,9 +52,11 @@ func PathToOSFile(relativePath string) (*os.File, error) {
 
 func URLToIOReader(url string) (io.Reader, error) {
 	var resp *http.Response
+	timeout := 30 * time.Second
 
-	err := wait.PollUntilContextTimeout(context.Background(), time.Second, time.Minute*5, false, func(_ context.Context) (bool, error) {
+	err := wait.PollUntilContextTimeout(context.Background(), time.Second, timeout, false, func(_ context.Context) (bool, error) {
 		var err error
+		//nolint:bodyclose
 		resp, err = http.Get(url)
 		if err == nil && resp.StatusCode == 200 {
 			return true, nil
