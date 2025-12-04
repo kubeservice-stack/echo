@@ -14,7 +14,6 @@ linters:
     - revive
     - testifylint
     - unconvert
-    - unused
     - whitespace
   disable:
     - unused
