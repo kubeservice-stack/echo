@@ -37,7 +37,8 @@ GOLANGCILINTER_BINARY=$(TOOLS_BIN_DIR)/golangci-lint
 GOSEC_BINARY=$(TOOLS_BIN_DIR)/gosec
 GOSYCLO_BINARY=$(TOOLS_BIN_DIR)/gocyclo
 SWAGGO_BINARY=$(TOOLS_BIN_DIR)/swag
-TOOLING=$(GOLANGCILINTER_BINARY) $(GOSEC_BINARY) $(GOSYCLO_BINARY) $(SWAGGO_BINARY)
+ADDLICENSE_BINARY=$(TOOLS_BIN_DIR)/addlicense
+TOOLING=$(GOLANGCILINTER_BINARY) $(GOSEC_BINARY) $(GOSYCLO_BINARY) $(SWAGGO_BINARY) $(ADDLICENSE_BINARY)
 
 GO_PKG=github.com/kubeservice-stack/$(SERVER_NAME)
 COMMON_PKG ?= $(GO_PKG)/pkg
@@ -62,7 +63,7 @@ GO_BUILD_RECIPE=\
 pkgs = $(shell go list ./... | grep -v /test/ | grep -v /vendor/)
 
 .PHONY: all
-all: swag format test build e2e # format test build e2e type.
+all: swag addlicense format test build e2e # format test build e2e type.
 
 .PHONY: clean
 clean: # Remove all files and directories ignored by git.
@@ -97,6 +98,9 @@ golangci-lint: $(GOLANGCILINTER_BINARY)  # golangci-lint
 swag: $(SWAGGO_BINARY) # swag
 	$(SWAGGO_BINARY) init -g ./cmd/main.go
 
+.PHONY: addlicense
+addlicense: $(ADDLICENSE_BINARY) # addlicense
+	$(ADDLICENSE_BINARY) -f scripts/boilerplate.txt -ignore $(shell pwd)/vendor/**/* **/*.go
 ###########
 # Testing #
 ###########

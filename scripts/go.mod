@@ -6,6 +6,7 @@ require (
 	github.com/bwplotka/mdox v0.9.1-0.20240703112857-a1dbd5b28516
 	github.com/fzipp/gocyclo v0.6.0
 	github.com/golangci/golangci-lint/v2 v2.6.2
+	github.com/google/addlicense v1.2.0
 	github.com/securego/gosec/v2 v2.22.10
 	github.com/swaggo/swag v1.16.4
 )
@@ -61,6 +62,7 @@ require (
 	github.com/bep/golibsass v1.1.1 // indirect
 	github.com/bkielbasa/cyclop v1.2.3 // indirect
 	github.com/blizzy78/varnamelen v0.8.0 // indirect
+	github.com/bmatcuk/doublestar/v4 v4.0.2 // indirect
 	github.com/bombsimon/wsl/v4 v4.7.0 // indirect
 	github.com/bombsimon/wsl/v5 v5.3.0 // indirect
 	github.com/breml/bidichk v0.3.3 // indirect
