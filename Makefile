@@ -100,7 +100,7 @@ swag: $(SWAGGO_BINARY) # swag
 
 .PHONY: addlicense
 addlicense: $(ADDLICENSE_BINARY) # addlicense
-	$(ADDLICENSE_BINARY) -f scripts/boilerplate.txt -ignore $(shell pwd)/vendor/**/* **/*.go
+	$(ADDLICENSE_BINARY) -f scripts/boilerplate.txt -ignore "{vendor/**,docs/**}" **/*.go
 ###########
 # Testing #
 ###########
