@@ -22,6 +22,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/kubeservice-stack/common/pkg/logger"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	docs "github.com/kubeservice-stack/echo/docs"
 	"github.com/kubeservice-stack/echo/pkg/middleware"
 	"github.com/kubeservice-stack/echo/pkg/version"
 )
@@ -75,6 +79,11 @@ func Router(r *gin.Engine) {
 	for _, info := range handlerAdapter {
 		v := r.Group(info.Group)
 		v.Handle(info.Method, info.Path, info.H)
+	}
+
+	if gin.Mode() != gin.ReleaseMode {
+		docs.SwaggerInfo.BasePath = "/"
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	}
 
 	r.NoRoute(func(c *gin.Context) {
