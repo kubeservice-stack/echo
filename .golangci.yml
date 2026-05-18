@@ -30,6 +30,9 @@ linters:
       exclude-functions:
         - (net/http.ResponseWriter).Write
         - (github.com/go-kit/log.Logger).Log
+    goconst:
+      ignore-tests: true
+      min-occurrences: 10
   exclusions:
     generated: lax
     presets:
