@@ -17,6 +17,11 @@ updates:
     directory: /
     schedule:
       interval: daily
+    groups:
+      github-actions-deps:
+        applies-to: version-updates
+        patterns:
+          - "*"
 
   - package-ecosystem: docker
     directory: /hack/build/
