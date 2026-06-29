@@ -37,13 +37,12 @@ func JSON(c *gin.Context, err error, data any) {
 	if err == nil {
 		c.JSON(http.StatusOK, &Response{http.StatusOK, "Success", data})
 	} else {
-		var nerr *errno.Errno
-		if errors.As(err, &nerr) {
-			c.JSON(nerr.Status(), &Response{nerr.Status(), nerr.Message(), data})
+		if nerr, ok := errors.AsType[*errno.Errno](err); ok {
+			c.JSON(nerr.Status, &Response{nerr.Status, nerr.Message, data})
 		} else {
 			c.JSON(http.StatusInternalServerError, &Response{
-				errno.InternalServerError.Status(),
-				errno.InternalServerError.Message(),
+				errno.InternalServerError.Status,
+				errno.InternalServerError.Message,
 				data},
 			)
 		}
