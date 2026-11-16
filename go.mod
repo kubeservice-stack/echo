@@ -3,7 +3,7 @@ module github.com/kubeservice-stack/echo
 go 1.26.0
 
 require (
-	github.com/KimMachineGun/automemlimit v0.7.5
+	github.com/KimMachineGun/automemlimit v1.0.1
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/blang/semver/v4 v4.0.0
 	github.com/gin-gonic/gin v1.12.0
